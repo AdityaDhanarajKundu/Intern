@@ -21,6 +21,8 @@ model Job{
   jobType             String
   salaryMin           Int
   salaryMax           Int
+  experience          Int
+  responsibility      String
   jobDescription      String
   applicationDeadline DateTime?
   status              String   @default("published") // or "draft"

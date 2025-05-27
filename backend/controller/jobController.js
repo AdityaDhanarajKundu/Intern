@@ -57,6 +57,8 @@ export const createJob = async (req, res) => {
     jobType,
     salaryMin,
     salaryMax,
+    experience,
+    responsibility,
     jobDescription,
     applicationDeadline,
     status,
@@ -71,6 +73,8 @@ export const createJob = async (req, res) => {
         jobType,
         salaryMin,
         salaryMax,
+        experience,
+        responsibility,
         jobDescription,
         applicationDeadline: applicationDeadline
           ? new Date(applicationDeadline)
