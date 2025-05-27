@@ -4,8 +4,9 @@ export async function getAllJobs(req,res){
     const { jobTitle, companyName, location, jobType, minSalary, maxSalary } =
       req.query;
 
-    const yearlyMin = minSalary ? Number(minSalary) * 12 : undefined;
-    const yearlyMax = maxSalary ? Number(maxSalary) * 12 : undefined;
+    const yearlyMin = minSalary ? Number(minSalary) * 12 * 1000 : undefined;
+    const yearlyMax = maxSalary ? Number(maxSalary) * 12 * 1000 : undefined;
+    console.log(yearlyMin, yearlyMax);
 
     try {
       const jobs = await prisma.job.findMany({
@@ -20,14 +21,15 @@ export async function getAllJobs(req,res){
             ? { equals: String(jobType), mode: "insensitive" }
             : undefined,
           AND: [
-            yearlyMin ? { salaryMin: { gte: yearlyMin } } : {},
-            yearlyMax ? { salaryMax: { lte: yearlyMax } } : {},
+            minSalary ? { salaryMin: { gte: yearlyMin } } : {},
+            maxSalary ? { salaryMax: { lte: yearlyMax } } : {},
           ],
         },
         orderBy: { createdAt: "desc" },
       });
 
       res.json(jobs);
+      console.log(res);
     } catch (error) {
       console.error("Error fetching jobs:", error);
       res.status(500).json({ error: "Failed to fetch jobs" });
