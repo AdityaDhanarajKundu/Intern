@@ -57,15 +57,15 @@ export const createJob = async (req, res) => {
     companyName,
     location,
     jobType,
-    salaryMin,
-    salaryMax,
+    minSalary,
+    maxSalary,
     experience,
-    responsibility,
-    jobDescription,
-    applicationDeadline,
+    requirements,
+    description,
+    deadline,
     status,
   } = req.body;
-
+  console.log(req.body);
   try {
     const newJob = await prisma.job.create({
       data: {
@@ -73,12 +73,12 @@ export const createJob = async (req, res) => {
         companyName,
         location,
         jobType,
-        salaryMin,
-        salaryMax,
-        experience,
-        responsibility,
-        jobDescription,
-        applicationDeadline: applicationDeadline
+        salaryMin: parseInt(minSalary),
+        salaryMax: parseInt(maxSalary),
+        experience: parseInt(experience), 
+        responsibility: requirements,
+        jobDescription: description,
+        applicationDeadline: deadline
           ? new Date(applicationDeadline)
           : null,
         status: status || "published",
